@@ -1,0 +1,338 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(45deg, rgb(93, 163, 255), skyblue) no-repeat fixed;
+  min-height: 100vh;
+}
+
+.scrollable-section {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 0px 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+
+/* Logout button in navbar */
+.logout-btn {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg, #ff4c4c, #ff6666);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #ff6666, #ff4c4c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+}
+
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1e88e5;
+  padding: 10px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 70px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Brand */
+.brand {
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* Nav items */
+.nav-items {
+  list-style: none;
+  display: flex;
+  gap: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+  color: white;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.nav-item:hover {
+  background-color: #1565c0;
+}
+
+/* Dropdowns */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #e3f2fd;
+  color: #333;
+  min-width: 170px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  list-style: none;
+  padding: 5px 0;
+  z-index: 1000;
+}
+
+.nav-item:hover .dropdown {
+  display: block;
+}
+
+/* Dropdown links */
+.dropdown a {
+  display: block;
+  padding: 10px 20px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.dropdown a:hover {
+  background-color: #bbdefb;
+}
+
+/* Nested dropdown */
+.has-nested {
+  position: relative;
+}
+
+.has-nested .nested-dropdown {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-color: #c8e6c9;
+  min-width: 160px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  list-style: none;
+  padding: 5px 0;
+  z-index: 1000;
+}
+
+.has-nested:hover .nested-dropdown {
+  display: block;
+}
+
+.nested-dropdown a {
+  padding: 8px 15px;
+  display: block;
+  text-decoration: none;
+  color: #333;
+}
+
+.nested-dropdown a:hover {
+  background-color: #a5d6a7;
+}
+
+/* Main content */
+.main-content {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: left;
+  transition: 0.3s;
+}
+
+.main-content h2 {
+  font-size: 28px;
+  color: #1e88e5;
+  margin-bottom: 15px;
+}
+
+.main-content p {
+  font-size: 16px;
+  color: #555;
+}
+
+h1 { 
+  text-align: center;
+  margin: 10px auto;
+}
+
+#myBookingsDiv {
+  border-radius: 7px;
+  padding: 10px 10px;
+  margin: 10px 0;
+  box-shadow: 0px 0px 6px gray;
+}
+
+#myOrdersDiv {
+  border-radius: 7px;
+  padding: 10px 10px;
+  margin: 10px 0;
+  box-shadow: 0px 0px 6px gray;
+}
+
+/* Card layout for dashboard items */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #1e88e5;
+}
+
+.card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Small laptops and tablets */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 10px 20px;
+  }
+
+  .nav-items {
+    gap: 25px;
+  }
+
+  .brand {
+    font-size: 28px;
+  }
+
+  .main-content {
+    margin: 30px 20px;
+    padding: 15px;
+  }
+
+  .main-content h2 {
+    font-size: 24px;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  #myBookingsDiv, #myOrdersDiv {
+    padding: 8px 8px;
+  }
+}
+
+.hamburger {
+  display: none;
+}
+
+@media (max-width: 836px) and (min-width: 541px) {
+  .has-nested .nested-dropdown {
+    left: auto;  /* ignore left */
+    right: 100%; /* flyout to left */
+  }
+}
+
+/* Mobile dropdown: <=540px */
+@media (max-width: 540px) {
+  .nav-items {
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 70px; /* navbar height */
+    left: 0;
+    z-index: 1000;
+    background-color: #1e88e5;
+  }
+
+  .nested-dropdown a:hover {
+    background-color: #1565c0; 
+  }
+
+  .nav-item {
+    width: auto; 
+    text-align: left;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    background-color: #2e97f3;
+    position: relative; 
+  }
+  
+  .dropdown, .nested-dropdown {
+    position: absolute;
+    top: 0;
+    left: 100%; 
+    display: none;
+    min-width: 160px;
+    max-width: 250px;
+    background-color: #2196f3;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1000;
+  }
+
+  @media (max-width: 480px) {
+    .has-nested .nested-dropdown {
+      left: auto;
+      right: 100%; 
+    }
+  }
+
+  .nav-item:hover .dropdown,
+  .has-nested:hover .nested-dropdown {
+    display: block;
+  }
+
+  .nested-dropdown a:hover {
+    background-color: #1565c0; 
+  }
+
+  .dropdown a, .nested-dropdown a {
+    padding: 8px 12px;
+    display: block;
+    color: white;
+    text-decoration: none;
+  }
+
+  .dropdown a:hover, .nested-dropdown a:hover {
+    background-color: #1565c0;
+  }
+
+  .hamburger {
+    display: block;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+  }
+}
