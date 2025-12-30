@@ -7,7 +7,7 @@ html, body{
 body{
     align-items: center;
     flex-direction: column;
-    background-image: url("../images/register_bg_img3.jpg");
+    background-image: url("../Images/register_bg_img3.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -182,4 +182,5 @@ button:active {
 
 .form-link:hover::after {
   width: 100%;
+
 }
