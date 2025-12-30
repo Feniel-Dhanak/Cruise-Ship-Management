@@ -1,5 +1,6 @@
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, collection, addDoc, query, where, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { app } from "./firebase.js";
 
 const auth = getAuth(app);
@@ -8,6 +9,17 @@ const db = getFirestore(app);
 const logoutBtn = document.getElementById("logoutBtn");
 const bookingsDiv = document.getElementById("myBookingsDiv");
 const ordersDiv = document.getElementById("myOrdersDiv");
+
+// Helper to format Firestore timestamps safely
+function formatTimestamp(ts) {
+    if (!ts) return "Processing...";
+    // If it's already a Date, just format it
+    if (ts instanceof Date) return ts.toLocaleString();
+    // If it's a Firestore Timestamp object
+    if (ts.toDate && typeof ts.toDate === "function") return ts.toDate().toLocaleString();
+
+    return new Date(ts).toLocaleString();
+}
 
 // Sample card data
 const cardData = {
@@ -31,23 +43,24 @@ const cardData = {
 
 let currentUser = null;
 
+
 // ---------------- Auth & Role Check ----------------
 onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    if (userDoc.exists()) {
-      const role = userDoc.data().role;
-      if (role !== "voyager") {
-        alert("Access denied. Redirecting to your dashboard...");
-        window.location.replace(`dashboard-${role}.html`);
-      }
-      currentUser = user;
-      loadMyBookings();
-      loadMyOrders();
+    if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+            const role = userDoc.data().role;
+            if (role !== "voyager") {
+                alert("Access denied. Redirecting to your dashboard...");
+                window.location.replace(`dashboard-${role}.html`);
+            }
+            currentUser = user;
+            loadMyBookings();
+            loadMyOrders();
+        }
+    } else {
+        window.location.replace("login.html");
     }
-  } else {
-    window.location.replace("login.html");
-  }
 });
 
 // ---------------- Navbar clicks ----------------
@@ -65,7 +78,6 @@ document.querySelector(".navbar").addEventListener("click", (e) => {
             const key = cl.textContent.trim();
             if (cardData[key]) itemsByChild[key] = cardData[key];
         });
-        const parentTitle = parentItem.querySelector(".nav-link").textContent.trim();
         renderCards(itemsByChild);
     } else {
         const key = link.textContent.trim();
@@ -76,7 +88,6 @@ document.querySelector(".navbar").addEventListener("click", (e) => {
 
 // ---------------- Render Cards ----------------
 function renderCards(itemsByChild) {
-    // Clear previous
     bookingsDiv.innerHTML = '<h2>My Bookings</h2>';
     ordersDiv.innerHTML = '<h2>My Orders</h2>';
 
@@ -96,29 +107,27 @@ function renderCards(itemsByChild) {
             card.className = 'card';
             card.innerHTML = Object.entries(item).map(([k,v]) => `<p><strong>${k}:</strong> ${v}</p>`).join('');
 
-            if (isBooking || !isBooking) {
-                const btn = document.createElement('button');
-                btn.textContent = isBooking ? 'Book' : 'Order';
-                btn.className = 'action-btn';
-                btn.style.cssText = 'margin-top:10px;padding:5px 10px;background:#1e88e5;color:white;border:none;border-radius:4px;cursor:pointer;';
-                btn.addEventListener('click', async () => {
-                    if (!currentUser) return alert("User not logged in!");
-                    const colName = isBooking ? 'bookings' : 'orders';
-                    try {
-                        await addDoc(collection(db, colName), {
-                            voyagerUid: currentUser.uid,
-                            voyagerEmail: currentUser.email,
-                            itemName: item.name,
-                            itemCategory: childName,
-                            createdAt: new Date().toISOString()
-                        });
-                        alert(`${isBooking ? 'Booking' : 'Order'} placed successfully for ${item.name}`);
-                    } catch(err) {
-                        alert("Error: " + err.message);
-                    }
-                });
-                card.appendChild(btn);
-            }
+            const btn = document.createElement('button');
+            btn.textContent = isBooking ? 'Book' : 'Order';
+            btn.className = 'action-btn';
+            btn.style.cssText = 'margin-top:10px;padding:5px 10px;background:#1e88e5;color:white;border:none;border-radius:4px;cursor:pointer;';
+            btn.addEventListener('click', async () => {
+                if (!currentUser) return alert("User not logged in!");
+                const colName = isBooking ? 'bookings' : 'orders';
+                try {
+                    await addDoc(collection(db, colName), {
+                        voyagerUid: currentUser.uid,
+                        voyagerEmail: currentUser.email,
+                        itemName: item.name,
+                        itemCategory: childName,
+                        createdAt: serverTimestamp()
+                    });
+                    alert(`${isBooking ? 'Booking' : 'Order'} placed successfully for ${item.name}`);
+                } catch(err) {
+                    alert("Error: " + err.message);
+                }
+            });
+            card.appendChild(btn);
             gridDiv.appendChild(card);
         });
         container.appendChild(gridDiv);
@@ -137,9 +146,7 @@ function loadMyBookings() {
             card.className = 'card bookings-card';
             card.style.cssText = 'margin:10px 0; padding:15px; border-radius:8px; border:1px solid #ddd;';
             card.innerHTML = `
-                <strong>${booking.itemName}</strong> <br>
-                <small>Category: ${booking.itemCategory}</small><br>
-                <small>Booked at: ${new Date(booking.createdAt).toLocaleString()}</small>
+                <small>Booked at: ${formatTimestamp(booking.createdAt)}</small>
             `;
             const cancelBtn = document.createElement('button');
             cancelBtn.textContent = 'Cancel';
@@ -170,7 +177,7 @@ function loadMyOrders() {
             card.innerHTML = `
                 <strong>${order.itemName}</strong> <br>
                 <small>Category: ${order.itemCategory}</small><br>
-                <small>Ordered at: ${new Date(order.createdAt).toLocaleString()}</small>
+                <small>Ordered at: ${formatTimestamp(order.createdAt)}</small>
             `;
             ordersDiv.appendChild(card);
         });
