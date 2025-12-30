@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../styles/register.css">
+</head>
+<body>
+    <div class="tagline-container">
+        <p class="tagline">Unforgettable starts here.</p>
+    </div>
+
+    <div class="registration-base-div">
+        <div class="registration-box">
+            <form id="registerForm">
+                <label for="username">Username</label><br>
+                <input type="text" id="username" name="username" placeholder="Eg. Rowan Atkinson" required><br><br>
+
+                <label for="registerEmail">Email</label><br>
+                <input type="email" id="registerEmail" name="registerEmail" placeholder="Eg. letsgocruise@gmail.com" required><br><br>
+
+                <label for="registerPassword">Password</label><br>
+                <input type="password" id="registerPassword" name="registerPassword" placeholder="Enter your password" required><br><br>
+
+                <label for="confirmPassword">Confirm Password</label><br>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Enter password again" required><br><br>
+
+                <!-- New Role Selection -->
+                <label for="role">Select Role</label><br>
+                <select id="role" name="role" required>
+                    <option value="voyager">Voyager</option>
+                    <option value="manager">Manager</option>
+                    <option value="head-cook">Head-Cook</option>
+                    <option value="supervisor">Supervisor</option>
+                    <option value="admin">Admin</option>
+                </select><br><br>
+
+                <button type="submit">Register Now!</button><br><br>
+                <a href="./login.html" class="form-link">Already have an account? Login here!</a>
+            </form>
+
+        </div>
+    </div>
+
+
+    <script type="module" src="../Scripts/firebase.js"></script>
+    <script type="module" src="../Scripts/register.js"></script>
+</body>
+</html>

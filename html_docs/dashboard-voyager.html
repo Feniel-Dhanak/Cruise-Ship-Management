@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSM Dashboard</title>
+  <link rel="stylesheet" href="../styles/dashboard-voyager.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="brand">Icon of the Seas</div>
+
+    <ul class="nav-items">
+      <!-- Bookings -->
+      <li class="nav-item">
+        Bookings
+        <ul class="dropdown">
+          <li class="dropdown-item has-nested">
+            <a href="#" class="nav-link">Tickets</a>
+            <ul class="nested-dropdown">
+              <li><a href="#" class="nav-link">Movie</a></li>
+              <li><a href="#" class="nav-link">Resort</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-item has-nested">
+            <a href="#" class="nav-link">Appointments</a>
+            <ul class="nested-dropdown">
+              <li><a href="#" class="nav-link">Salon</a></li>
+              <li><a href="#" class="nav-link">Spa</a></li>
+              <li><a href="#" class="nav-link">Medical Consultation</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-item has-nested">
+            <a href="#" class="nav-link">Sessions</a>
+            <ul class="nested-dropdown">
+              <li><a href="#" class="nav-link">Gym</a></li>
+              <li><a href="#" class="nav-link">Yoga Classes</a></li>
+              <li><a href="#" class="nav-link">Art Classes</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-item has-nested">
+            <a href="#" class="nav-link">Party Halls</a>
+            <ul class="nested-dropdown">
+              <li><a href="#" class="nav-link">Event Hall</a></li>
+              <li><a href="#" class="nav-link">Banquet Hall</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Orders -->
+      <li class="nav-item">
+        Orders
+        <ul class="dropdown">
+          <li class="dropdown-item has-nested">
+            <a href="#" class="nav-link">Catering Items</a>
+            <ul class="nested-dropdown">
+              <li><a href="#" class="nav-link">Snacks</a></li>
+              <li><a href="#" class="nav-link">Meals</a></li>
+              <li><a href="#" class="nav-link">Beverages</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-item has-nested">
+            <a href="#" class="nav-link">Stationary Items</a>
+            <ul class="nested-dropdown">
+              <li><a href="#" class="nav-link">Books</a></li>
+              <li><a href="#" class="nav-link">Gifts</a></li>
+              <li><a href="#" class="nav-link">Chocolates</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- Logout Button -->
+    <button id="logoutBtn" class="logout-btn">Log out</button>
+  </nav>
+
+  <!-- Main Dashboard Content -->
+  <div class="main-content dashboard-container">
+    <h1>Welcome to Your Dashboard</h1>
+
+    <!-- Bookings section -->
+    <div id="myBookingsDiv" class="scrollable-section"></div>
+
+    <!-- Orders section -->
+    <div id="myOrdersDiv" class="scrollable-section"></div>
+
+    <p>Select a booking or order from the navbar to view details here.</p>
+  </div>
+
+  <script type="module" src="../Scripts/dashboard-voyager.js"></script>
+</body>
+</html>
